@@ -1,0 +1,65 @@
+The core benefits of DevOps are as follows:
+
+Technical benefits
+    Continuous software delivery
+    Less complex problems to manage
+    Early detection and faster correction of defects
+
+Business benefits
+    Faster delivery of features
+    Stable operating environments
+    Improved communication and collaboration between the teams
+
+
+
+
+Continuous Delivery :
+Ensures code can be safely deployed on to production 	
+Ensures business applications and services function as expected 	
+Delivers every change to a production-like environment through rigorous automated testing 	
+
+Continuous Deployment:
+Every change that passes the automated tests is deployed to production automatically
+Makes software development and the release process faster and more robust
+There is no explicit approval from a developer and requires a developed culture of monitoring
+
+
+What is the role of configuration management in DevOps?
+    Enables management of and changes to multiple systems.
+    Standardizes resource configurations, which in turn, manage IT infrastructure.
+    It helps with the administration and management of multiple servers and maintains the integrity of the entire infrastructure.
+
+
+Why are SSL certificates used in Chef?
+    SSL certificates are used between the Chef server and the client to ensure that each node has access to the right data.
+    Every node has a private and public key pair. The public key is stored at the Chef server.
+    When an SSL certificate is sent to the server, it will contain the private key of the node.
+    The server compares this against the public key in order to identify the node and give the node access to the required data.
+
+
+Explain the architecture of Docker.
+    Docker uses a client-server architecture.
+    Docker Client is a service that runs a command. The command is translated using the REST API and is sent to the Docker Daemon (server). 
+    Docker Daemon accepts the request and interacts with the operating system to build Docker images and run Docker containers.
+    A Docker image is a template of instructions, which is used to create containers.
+    Docker container is an executable package of an application and its dependencies together.
+    Docker registry is a service to host and distribute Docker images among users.
+
+
+What are the advantages of Docker over virtual machines?
+Criteria 			Virtual Machine  													Docker
+Memory space 	Occupies a lot of memory space 									Docker containers occupy less space
+Boot-up time 	Long boot-up time 												Short boot-up time
+Performance 	Running multiple virtual machines leads to unstable performance  	Containers have a better performance, as they are hosted in a single Docker engine
+Scaling 			Difficult to scale up 												Easy to scale up
+Efficiency 		Low efficiency 													High efficiency
+Portability 		Compatibility issues while porting across different platforms 		Easily portable across different platforms
+Space allocation 	Data volumes cannot be shared 									Data volumes are shared and used again across multiple containers
+
+
+Explain the differences between Docker images and Docker containers.
+Docker Images  										Docker Container
+Docker images are templates of Docker containers 	Containers are runtime instances of a Docker image
+An image is built using a Dockerfile 					Containers are created using Docker images
+It is stored in a Docker repository or a Docker hub 		They are stored in the Docker daemon
+The image layer is a read-only filesystem 				Every container layer is a read-write filesystem
