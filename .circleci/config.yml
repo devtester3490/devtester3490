@@ -29,7 +29,8 @@ jobs:
           name: terraform
           command: |
             terraform init -input=false
-            terraform apply main.tf -auto-approve -input=false
+            terraform apply main.tf
+            # auto-approve -input=false
       - run:
           name: lambda
           command: |
