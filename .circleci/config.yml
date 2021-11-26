@@ -13,6 +13,7 @@ jobs:
       - checkout
       - install_terraform
       - run:
+          name: python test
           command: |
             python3 main.py
             python3 main-test.py
@@ -29,8 +30,7 @@ jobs:
           name: terraform
           command: |
             terraform init -input=false
-            terraform apply main.tf
-            # auto-approve -input=false
+            terraform apply -auto-approve -input=false
       - run:
           name: lambda
           command: |
