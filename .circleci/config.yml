@@ -35,6 +35,7 @@ jobs:
           name: lambda
           command: |
             awslocal lambda list-functions
+            awslocal lambda invoke --function-name ExampleLambda /dev/stdout
           # *invoking* the lambda requires configuring LocalStack with LAMBDA_EXECUTOR=docker ,
           # which runs docker-in-docker and doesn't work trivially in Circle.
 
