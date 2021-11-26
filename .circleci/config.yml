@@ -6,7 +6,10 @@ jobs:
     executor: localstack/default
     steps:
       - localstack/startup
+      - checkout
       - run:
+          python3 main.py
+          python3 main-test.py
           command: |
             awslocal s3 mb s3://test-bucket
             awslocal s3 ls
