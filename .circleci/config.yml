@@ -1,4 +1,4 @@
-version: '2.1'
+version: 2.1
 orbs:
   localstack: localstack/platform@1.0
 jobs:
