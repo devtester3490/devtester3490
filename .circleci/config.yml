@@ -17,28 +17,34 @@ jobs:
           command: |
             python3 main.py
             python3 main-test.py
-            awslocal s3 mb s3://test-bucket
-            awslocal s3 cp main.py s3://test-bucket
-            awslocal s3 ls
+      - run:
+          name: Install Serverless
+          command: |
+            sudo npm -g serverless
+            npm install --save-dev serverless-localstack
+            serverless create --template aws-nodejs --path localstack-lambda
+            serverless deploy --stage local
+            serverless info --stage local
+            serverless invoke local -f hello -l
       - run:
           name: aws stuff
           command: |
             awslocal --version
             awslocal s3 mb s3://local-bucket
             awslocal s3 ls
-      - run:
-          name: terraform
-          command: |
-            terraform init -input=false
-            terraform apply -auto-approve -input=false
-      - run:
-          name: lambda
-          command: |
-            awslocal lambda list-functions
-            awslocal lambda invoke --function-name ExampleLambda /dev/stdout
-          # *invoking* the lambda requires configuring LocalStack with LAMBDA_EXECUTOR=docker ,
-          # which runs docker-in-docker and doesn't work trivially in Circle.
-
+#     - run:
+#          name: terraform
+#          command: |
+#            terraform init -input=false
+#            terraform apply -auto-approve -input=false
+#      - run:
+#          name: lambda
+#          command: |
+#            awslocal lambda list-functions
+#            awslocal lambda invoke --function-name ExampleLambda /dev/stdout
+#          # *invoking* the lambda requires configuring LocalStack with LAMBDA_EXECUTOR=docker ,
+#          # which runs docker-in-docker and doesn't work trivially in Circle.
+#
 commands:
   install_terraform:
     description: "install terraform"
