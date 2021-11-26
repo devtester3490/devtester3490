@@ -11,6 +11,7 @@ jobs:
     steps:
       - localstack/startup
       - checkout
+      - install_terraform
       - run:
           command: |
             python3 main.py
@@ -35,7 +36,23 @@ jobs:
             awslocal lambda list-functions
           # *invoking* the lambda requires configuring LocalStack with LAMBDA_EXECUTOR=docker ,
           # which runs docker-in-docker and doesn't work trivially in Circle.
-            
+
+commands:
+  install_terraform:
+    description: "install terraform"
+    steps:
+      - run:
+          name: Install Terraform
+          environment:
+            TF_VERSION: 0.12.18
+          command: |
+            mkdir -p ~/bin
+            cd ~/bin
+            wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+            unzip terraform_${TF_VERSION}_linux_amd64.zip
+            echo 'export PATH=~/bin:$PATH'  >> $BASH_ENV
+            terraform --version
+
 workflows:
   localstack-test:
     jobs:
