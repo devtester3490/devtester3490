@@ -1,25 +1,21 @@
 version: 2.1
-
+orbs:
+  localstack: localstack/platform@1.0.1
 jobs:
-  build:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
+  localstack-test:
+    executor: localstack/default
     steps:
+      - localstack/startup
       - checkout
-      - run: python3 main.py
-  test:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
-    steps:
-      - checkout
-      - run: python3 main-test.py
-
+      - run:
+          command: |
+            python3 main.py
+            python3 main-test.py
+            awslocal s3 mb s3://test-bucket
+            awslocal s3 cp main.py s3://test-bucket
+            awslocal s3 ls
+            
 workflows:
-  build_and_test:
+  localstack-test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - localstack-test
