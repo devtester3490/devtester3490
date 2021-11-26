@@ -4,9 +4,14 @@ orbs:
 jobs:
   localstack-test:
     executor: localstack/default
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_SECRET_ACCESS_KEY: foo
+      AWS_ACCESS_KEY_ID: bar
     steps:
       - localstack/startup
       - checkout
+      - install_terraform
       - run:
           command: |
             python3 main.py
@@ -14,6 +19,23 @@ jobs:
             awslocal s3 mb s3://test-bucket
             awslocal s3 cp main.py s3://test-bucket
             awslocal s3 ls
+      - run:
+          name: aws stuff
+          command: |
+            awslocal --version
+            awslocal s3 mb s3://local-bucket
+            awslocal s3 ls
+      - run:
+          name: terraform
+          command: |
+            terraform init -input=false
+            terraform apply main.tf -auto-approve -input=false
+      - run:
+          name: lambda
+          command: |
+            awslocal lambda list-functions
+          # *invoking* the lambda requires configuring LocalStack with LAMBDA_EXECUTOR=docker ,
+          # which runs docker-in-docker and doesn't work trivially in Circle.
             
 workflows:
   localstack-test:
