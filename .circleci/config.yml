@@ -11,7 +11,8 @@ jobs:
     steps:
       - localstack/startup
       - checkout
-      - install_terraform
+      - install_serverless
+#      - install_terraform
       - run:
           name: python test
           command: |
@@ -20,7 +21,7 @@ jobs:
       - run:
           name: Install Serverless
           command: |
-            sudo npm -g serverless
+            npm -g serverless
             npm install --save-dev serverless-localstack
             serverless create --template aws-nodejs --path localstack-lambda
             serverless deploy --stage local
@@ -60,7 +61,17 @@ commands:
             unzip terraform_${TF_VERSION}_linux_amd64.zip
             echo 'export PATH=~/bin:$PATH'  >> $BASH_ENV
             terraform --version
-
+  install_serverless:
+    description: "install serverless"
+    steps:
+      - run:
+          name: Install Serverless
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            nodejs --version  
+            curl -o- -L https://slss.io/install | bash
+            serverless --version
 workflows:
   localstack-test:
     jobs:
