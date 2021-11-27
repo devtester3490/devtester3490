@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Run Serverless
           command: |
+            cd localstack-lambda
             serverless deploy --stage local
             serverless info --stage local
             serverless invoke local -f hello -l
