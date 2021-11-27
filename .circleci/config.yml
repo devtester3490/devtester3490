@@ -22,6 +22,7 @@ jobs:
           name: Run Serverless
           command: |
             cd localstack-lambda
+            serverless plugin install -n serverless-localstack
             serverless deploy --stage local
             serverless info --stage local
             serverless invoke local -f hello -l
