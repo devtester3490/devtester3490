@@ -19,10 +19,8 @@ jobs:
             python3 main.py
             python3 main-test.py
       - run:
-          name: Install Serverless
+          name: Run Serverless
           command: |
-            npm -g serverless
-            npm install --save-dev serverless-localstack
             serverless create --template aws-nodejs --path localstack-lambda
             serverless deploy --stage local
             serverless info --stage local
